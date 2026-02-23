@@ -32,3 +32,68 @@ Provides the following tools:
    
    oj-mcp-server
    ```
+
+## Installation in MCP Clients
+
+To use this server with an MCP-compatible client like Claude Desktop, Cursor, or Cline, you need to add it to your client's MCP configuration settings.
+
+### Claude Desktop
+
+Edit your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "oj-mcp-server": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "c:/dev/oj-mcp-server",
+        "run",
+        "oj-mcp-server"
+      ],
+      "env": {
+        "OJ_URL": "http://localhost:8000",
+        "OJ_USERNAME": "your-username",
+        "OJ_PASSWORD": "your-password"
+      }
+    }
+  }
+}
+```
+
+### Cursor / Cline
+
+In the MCP settings panel, add a new server:
+- **Type**: command
+- **Name**: `oj-mcp-server`
+- **Command**: `uv --directory c:/dev/oj-mcp-server run oj-mcp-server` (or the direct path to the python executable if installed via pip)
+- **Environment**: Set `OJ_URL`, `OJ_USERNAME`, and `OJ_PASSWORD`
+
+*(Make sure to adjust the directory path to wherever you cloned the repository)*
+
+### OpenCode
+
+To configure the MCP server in the OpenCode IDE, you can edit your `opencode.json` configuration file (located globally at `~/.config/opencode/opencode.json` or in your project directory). Add the server under the `mcp` key:
+
+```json
+{
+  "mcp": {
+    "oj-mcp-server": {
+      "type": "local",
+      "command": [
+        "uv",
+        "--directory",
+        "c:/dev/oj-mcp-server",
+        "run",
+        "oj-mcp-server"
+      ],
+      "environment": {
+        "OJ_URL": "http://localhost:8000",
+        "OJ_USERNAME": "your-username",
+        "OJ_PASSWORD": "your-password"
+      }
+    }
+  }
+}
+```
