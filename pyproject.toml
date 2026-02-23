@@ -1,7 +1,7 @@
 [project]
 name = "oj-mcp-server"
 version = "0.1.0"
-description = "MCP server for Orange Juice Online Judge"
+description = "MCP server for an Online Judge"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

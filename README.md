@@ -1,6 +1,6 @@
-# Orange Juice Online Judge MCP Server
+# Online Judge MCP Server
 
-This is a Model Context Protocol (MCP) server that provides AI agents with tools to interact with the Orange Juice Online Judge API.
+This is a Model Context Protocol (MCP) server that provides AI agents with tools to interact with an Online Judge API.
 
 ## Features
 
