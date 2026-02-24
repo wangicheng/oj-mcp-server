@@ -1,5 +1,12 @@
 # Online Judge MCP Server
 
+![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)
+[![License](https://img.shields.io/github/license/wangicheng/oj-mcp-server.svg)](https://github.com/wangicheng/oj-mcp-server/blob/main/LICENSE)
+
+<a href="https://glama.ai/mcp/servers/@wangicheng/oj-mcp-server">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@wangicheng/oj-mcp-server/badge" />
+</a>
+
 This is a Model Context Protocol (MCP) server that provides AI agents with tools to interact with an Online Judge API.
 
 ## Features
