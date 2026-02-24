@@ -14,7 +14,7 @@ Provides the following tools:
 ## Requirements
 
 - Python 3.10 or higher
-- `uv` (recommended) or `pip`
+- `pip`
 
 ## Setup & Running
 
@@ -45,13 +45,8 @@ Edit your `claude_desktop_config.json`:
 {
   "mcpServers": {
     "oj-mcp-server": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "c:/dev/oj-mcp-server",
-        "run",
-        "oj-mcp-server"
-      ],
+      "command": "C:/path/to/venv/Scripts/oj-mcp-server",
+      "args": [],
       "env": {
         "OJ_URL": "http://localhost:8000",
         "OJ_USERNAME": "your-username",
@@ -67,7 +62,7 @@ Edit your `claude_desktop_config.json`:
 In the MCP settings panel, add a new server:
 - **Type**: command
 - **Name**: `oj-mcp-server`
-- **Command**: `uv --directory c:/dev/oj-mcp-server run oj-mcp-server` (or the direct path to the python executable if installed via pip)
+- **Command**: `C:/path/to/venv/Scripts/oj-mcp-server` (or `/path/to/venv/bin/oj-mcp-server` on macOS/Linux)
 - **Environment**: Set `OJ_URL`, `OJ_USERNAME`, and `OJ_PASSWORD`
 
 *(Make sure to adjust the directory path to wherever you cloned the repository)*
@@ -82,11 +77,7 @@ To configure the MCP server in the OpenCode IDE, you can edit your `opencode.jso
     "oj-mcp-server": {
       "type": "local",
       "command": [
-        "uv",
-        "--directory",
-        "c:/dev/oj-mcp-server",
-        "run",
-        "oj-mcp-server"
+        "C:/path/to/venv/Scripts/oj-mcp-server"
       ],
       "environment": {
         "OJ_URL": "http://localhost:8000",
