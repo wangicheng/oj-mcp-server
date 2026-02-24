@@ -75,6 +75,9 @@ def get_problem_details(problem_id: str) -> str:
     and test cases for a specific problem_id.
     Call this AFTER you have identified the correct problem_id using list_problems.
     problem_id: The external ID/display ID of the problem (e.g., "PR-114-1-31").
+    
+    Please note the `languages` array in the returned data. Ensure any code 
+    solutions or examples you provide match one of the supported languages.
     """
     c = get_authenticated_client()
     try:
@@ -88,7 +91,7 @@ def submit_code(problem_id: int, code: str, language: str) -> str:
     """
     Submit code to the Online Judge for a specific problem.
     problem_id: the internal system ID of the problem.
-    language: string such as "C", "C++", "Python3".
+    language: exact string from the supported languages list (e.g., "C", "C++", "Python3").
     code: the source code to submit.
     """
     c = get_authenticated_client()
