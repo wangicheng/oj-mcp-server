@@ -1,6 +1,7 @@
 # Online Judge MCP Server
 
 ![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)
+[![PyPI](https://img.shields.io/pypi/v/oj-mcp-server.svg)](https://pypi.org/project/oj-mcp-server/)
 [![License](https://img.shields.io/github/license/wangicheng/oj-mcp-server.svg)](https://github.com/wangicheng/oj-mcp-server/blob/main/LICENSE)
 
 <a href="https://glama.ai/mcp/servers/@wangicheng/oj-mcp-server">
@@ -18,42 +19,41 @@ Provides the following tools:
 - `submit_code(problem_id, code, language)`: Submit source code to a specific problem.
 - `get_submission_status(submission_id)`: Check the polling status of a code submission.
 
-## Requirements
+## Quickstart
 
-- Python 3.10 or higher
-- `pip`
+### Using `uvx` (Recommended)
+The easiest way to run this server is using [`uvx`](https://docs.astral.sh/uv/), which automatically downloads the correct Python version, creates an ephemeral environment, and runs the tool seamlessly:
 
-## Setup & Running
+```bash
+set OJ_URL="http://localhost:8000" # Replace with actual OJ URL
+set OJ_USERNAME="your-username"
+set OJ_PASSWORD="your-password"
 
-1. **Install dependencies**:
-   ```bash
-   pip install -e .
-   ```
+uvx oj-mcp-server
+```
 
-2. **Run the MCP server locally**:
-   Set the following environment variables before running:
-   ```bash
-   set OJ_URL="http://localhost:8000" # Replace with actual OJ URL
-   set OJ_USERNAME="your-username"
-   set OJ_PASSWORD="your-password"
-   
-   oj-mcp-server
-   ```
+### Using `pip` or `pipx`
+Alternatively, you can install the package directly into your Python environment:
 
-## Installation in MCP Clients
+```bash
+pip install oj-mcp-server
+oj-mcp-server
+```
 
-To use this server with an MCP-compatible client like Claude Desktop, Cursor, or Cline, you need to add it to your client's MCP configuration settings.
+## Usage with MCP Clients
+
+To use this server, add it to your MCP client's configuration (e.g., Claude Desktop, Cursor, Cline).
 
 ### Claude Desktop
 
-Edit your `claude_desktop_config.json`:
+Add the following to your `claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "oj-mcp-server": {
-      "command": "C:/path/to/venv/Scripts/oj-mcp-server",
-      "args": [],
+      "command": "uvx",
+      "args": ["oj-mcp-server"],
       "env": {
         "OJ_URL": "http://localhost:8000",
         "OJ_USERNAME": "your-username",
@@ -63,29 +63,26 @@ Edit your `claude_desktop_config.json`:
   }
 }
 ```
+*Note: If you installed globally via `pip`, simply change `"command"` to `"oj-mcp-server"` and `"args"` to `[]`.*
 
-### Cursor / Cline
+### Cursor & Cline
 
 In the MCP settings panel, add a new server:
 - **Type**: command
 - **Name**: `oj-mcp-server`
-- **Command**: `C:/path/to/venv/Scripts/oj-mcp-server` (or `/path/to/venv/bin/oj-mcp-server` on macOS/Linux)
+- **Command**: `uvx oj-mcp-server` *(or `oj-mcp-server` if installed via pip)*
 - **Environment**: Set `OJ_URL`, `OJ_USERNAME`, and `OJ_PASSWORD`
-
-*(Make sure to adjust the directory path to wherever you cloned the repository)*
 
 ### OpenCode
 
-To configure the MCP server in the OpenCode IDE, you can edit your `opencode.json` configuration file (located globally at `~/.config/opencode/opencode.json` or in your project directory). Add the server under the `mcp` key:
+Add this configured server inside your `opencode.json` (under the `mcp` key):
 
 ```json
 {
   "mcp": {
     "oj-mcp-server": {
       "type": "local",
-      "command": [
-        "C:/path/to/venv/Scripts/oj-mcp-server"
-      ],
+      "command": ["uvx", "oj-mcp-server"],
       "environment": {
         "OJ_URL": "http://localhost:8000",
         "OJ_USERNAME": "your-username",
@@ -95,3 +92,4 @@ To configure the MCP server in the OpenCode IDE, you can edit your `opencode.jso
   }
 }
 ```
+*Note: If using pip, change the command array to `["oj-mcp-server"]`.*

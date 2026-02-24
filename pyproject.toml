@@ -4,11 +4,26 @@ version = "0.1.0"
 description = "MCP server for an Online Judge"
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [
+    { name = "h_bugw7", email = "r2005.wang@gmail.com" }
+]
+license = { text = "MIT" }
+keywords = ["mcp", "online-judge", "mcp-server", "ai-tools"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "mcp[cli]>=1.0.0",
     "requests",
     "python-dotenv",
 ]
+
+[project.urls]
+"Homepage" = "https://github.com/wangicheng/oj-mcp-server"
+"Bug Tracker" = "https://github.com/wangicheng/oj-mcp-server/issues"
 
 [build-system]
 requires = ["hatchling"]
