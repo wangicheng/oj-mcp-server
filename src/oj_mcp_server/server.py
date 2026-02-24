@@ -10,23 +10,21 @@ load_dotenv()
 # Initialize FastMCP server
 mcp = FastMCP("oj-mcp-server")
 
-# Configuration
-OJ_URL = os.environ.get("OJ_URL")
-OJ_USERNAME = os.environ.get("OJ_USERNAME")
-OJ_PASSWORD = os.environ.get("OJ_PASSWORD")
-
-
-client = OJClient(base_url=OJ_URL)
+client = OJClient()
 is_logged_in = False
 
 def get_authenticated_client():
     global is_logged_in
     if not is_logged_in:
-        if not OJ_URL:
-             raise ValueError("OJ_URL environment variable is required.")
-        if not OJ_USERNAME or not OJ_PASSWORD:
-            raise ValueError("OJ_USERNAME and OJ_PASSWORD environment variables are required.")
-        client.login(OJ_USERNAME, OJ_PASSWORD)
+        oj_url = os.environ.get("OJ_URL")
+        oj_username = os.environ.get("OJ_USERNAME")
+        oj_password = os.environ.get("OJ_PASSWORD")
+        if not oj_url:
+             raise ValueError(f"OJ_URL environment variable is required. Received: {oj_url}")
+        if not oj_username or not oj_password:
+            raise ValueError(f"OJ_USERNAME and OJ_PASSWORD environment variables are required. Username received: {oj_username}")
+        client.base_url = oj_url
+        client.login(oj_username, oj_password)
         is_logged_in = True
     return client
 
