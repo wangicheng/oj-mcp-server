@@ -39,8 +39,10 @@ class OJClient:
             self.session.headers['X-CSRFToken'] = self._csrf_token
         return data
 
-    def get_problems(self, offset=0, limit=50):
+    def get_problems(self, offset=0, limit=50, keyword=""):
         params = {'paging': 'true', 'offset': offset, 'limit': limit}
+        if keyword:
+            params['keyword'] = keyword
         resp = self.session.get(self._get_url("/api/problem"), params=params, timeout=20)
         resp.raise_for_status()
         return resp.json()

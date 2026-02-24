@@ -1,4 +1,5 @@
 import os
+import json
 from mcp.server.fastmcp import FastMCP
 from dotenv import load_dotenv
 from .oj_client import OJClient
@@ -28,15 +29,29 @@ def get_authenticated_client():
     return client
 
 @mcp.tool()
-def list_problems(offset: int = 0, limit: int = 50) -> str:
+def list_problems(offset: int = 0, limit: int = 50, keyword: str = "") -> str:
     """
-    Fetch the list of problems from the Online Judge.
-    Returns a JSON string containing total count and results.
+    Step 1: Use this tool FIRST to search and list problems.
+    It returns a SIMPLIFIED list of problems (id, display_id, title) to avoid token overflow.
+    If you are looking for a specific problem, use the 'keyword' parameter.
+    If the results array is shorter than the 'total' field in response, you can use 'offset' to paginate.
+    Once you find the target problem's ID, use the 'get_problem_details' tool.
     """
     c = get_authenticated_client()
     try:
-        data = c.get_problems(offset=offset, limit=limit)
-        return str(data)
+        data = c.get_problems(offset=offset, limit=limit, keyword=keyword)
+        
+        if "data" in data and "results" in data["data"]:
+            simplified_results = []
+            for p in data["data"]["results"]:
+                simplified_results.append({
+                    "id": p.get("id"),
+                    "display_id": p.get("_id"),
+                    "title": p.get("title")
+                })
+            data["data"]["results"] = simplified_results
+            
+        return json.dumps(data, ensure_ascii=False)
     except Exception as e:
         return f"Error: {e}"
 
@@ -56,13 +71,15 @@ def list_my_submissions(offset: int = 0, limit: int = 20) -> str:
 @mcp.tool()
 def get_problem_details(problem_id: str) -> str:
     """
-    Fetch the detailed information of a specific problem.
+    Step 2: Use this tool to get the FULL problem description, requirements, 
+    and test cases for a specific problem_id.
+    Call this AFTER you have identified the correct problem_id using list_problems.
     problem_id: The external ID/display ID of the problem (e.g., "PR-114-1-31").
     """
     c = get_authenticated_client()
     try:
         data = c.get_problem(problem_id)
-        return str(data)
+        return json.dumps(data, ensure_ascii=False)
     except Exception as e:
         return f"Error: {e}"
 
